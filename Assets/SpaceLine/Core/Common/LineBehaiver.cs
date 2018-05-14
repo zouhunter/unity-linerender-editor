@@ -56,7 +56,6 @@ namespace SpaceLine.Common
         {
             var holder = new GameObject("lineRenderer",typeof(MeshFilter),typeof(MeshRenderer));
             holder.transform.SetParent(transform);
-            Debug.Log(gameObject.transform);
             lineRender = holder.AddComponent<VRLineRenderer>();
             lineRender.SetVertexCount(0);
             lineRender.useWorldSpace = true;
