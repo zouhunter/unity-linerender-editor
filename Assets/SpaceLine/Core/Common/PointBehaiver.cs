@@ -32,13 +32,18 @@ namespace SpaceLine.Common
             transform.localPosition = Info.position;
             CreateCollider();
         }
+
         private void OnMouseUp()
         {
-            if (onClicked != null && !IsMousePointOnUI() && HaveExecuteTwince(ref timer)) onClicked.Invoke(this);
+            if (onClicked != null && !IsMousePointOnUI() && this == hoverItem)
+            {
+                onClicked.Invoke(this);
+            }
         }
 
-        private void OnMouseOver()
+        protected override void OnMouseOver()
         {
+            base.OnMouseOver();
             if (onHover != null && !IsMousePointOnUI())
                 onHover.Invoke(this);
         }

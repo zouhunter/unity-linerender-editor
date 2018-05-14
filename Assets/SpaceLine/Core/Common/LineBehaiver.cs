@@ -98,11 +98,20 @@ namespace SpaceLine.Common
 
         private void OnMouseUp()
         {
-            if (onClicked != null && !IsMousePointOnUI() && HaveExecuteTwince(ref timer)) onClicked.Invoke(this);
+            if (!IsMousePointOnUI())
+            {
+                if(onClicked != null && this == hoverItem)
+                {
+                    onClicked.Invoke(this);
+                }
+
+            }
         }
-        private void OnMouseOver()
+        protected override void OnMouseOver()
         {
-            if (onHover != null && !IsMousePointOnUI()) onHover.Invoke(this);
+            base.OnMouseOver();
+            if (onHover != null && !IsMousePointOnUI())
+                onHover.Invoke(this);
         }
 
         public void SetSize(float r_Bar)

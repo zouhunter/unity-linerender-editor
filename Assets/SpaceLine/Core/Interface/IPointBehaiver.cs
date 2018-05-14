@@ -15,5 +15,6 @@ namespace SpaceLine
     public interface IPointBehaiver
     {
         GameObject Body { get; }
+        Point Info { get; }
     }
 }

@@ -10,6 +10,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Events;
+
 namespace SpaceLine.Common
 {
     /// <summary>
@@ -21,6 +23,8 @@ namespace SpaceLine.Common
         private Queue<LineBehaiver> linePool = new Queue<LineBehaiver>();
         private Transform pointParent;
         private Transform lineParent;
+        public UnityAction<Line> onClickLine { get; set; }
+        public UnityAction<Point> onClickPoint { get; set; }
 
         protected override void Awake()
         {
@@ -54,7 +58,7 @@ namespace SpaceLine.Common
                 var instence = new GameObject(line.id, typeof(LineBehaiver));
                 instence.transform.SetParent(lineParent);
                 behaiver = instence.GetComponent<LineBehaiver>();
-                
+                behaiver.onClicked = (x) => { if (onClickLine != null) onClickLine(x.Info); Debug.Log("click:" + x); };
             }
             var startPoint = linesObject.points.Find(x => x.id == line.fromNodeId);
             var endPoint = linesObject.points.Find(x => x.id == line.toNodeId);
@@ -81,6 +85,7 @@ namespace SpaceLine.Common
                 var instence = new GameObject(point.id, typeof(PointBehaiver));
                 instence.transform.SetParent(pointParent);
                 behaiver = instence.GetComponent<PointBehaiver>();
+                behaiver.onClicked = (x) => { if (onClickPoint != null) onClickPoint(x.Info); Debug.Log("click:" + x); };
             }
             behaiver.OnInitialized(point);
             return behaiver;

@@ -15,5 +15,6 @@ namespace SpaceLine
     public interface ILineBehaiver
     {
         GameObject Body { get; }
+        Line Info { get; }
     }
 }

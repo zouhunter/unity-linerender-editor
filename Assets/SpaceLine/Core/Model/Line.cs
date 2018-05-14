@@ -16,6 +16,7 @@ namespace SpaceLine {
     [System.Serializable]
     public class Line {
         public string id;
+        public string name;
         public string type;
         public string fromNodeId;
         public string toNodeId;

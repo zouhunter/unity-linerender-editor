@@ -23,6 +23,7 @@ namespace SpaceLine
         protected PointerEventData pointData;
         protected List<RaycastResult> rayCasts = new List<RaycastResult>();
         protected float timer;
+        public static ContentBehaiver hoverItem;
 
         protected void CreateCollider()
         {
@@ -51,18 +52,9 @@ namespace SpaceLine
             return false;
         }
 
-        protected virtual bool HaveExecuteTwince(ref float timer, float time = 0.5f)
+        protected virtual void OnMouseOver()
         {
-            if (Time.time - timer < time)
-            {
-                timer = 0;
-                return true;
-            }
-            else
-            {
-                timer = Time.time;
-                return false;
-            }
+            hoverItem = this;
         }
     }
 }

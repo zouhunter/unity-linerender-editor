@@ -39,7 +39,8 @@ namespace SpaceLine
         protected virtual void Awake() { }
         protected virtual void OnEnable()
         {
-            if (linesObject){
+            if (loadOnEnable && linesObject)
+            {
                 DrawLinesObject();
             }
         }

@@ -37,7 +37,7 @@ namespace SpaceLine.Drawer
             linesRecord = target as LinesRecord;
             var groups = linesRecord.pairGroups;
             var pairs = MergeGroups(groups);
-            var points = GetAllPointRecords(pairs);
+            var points = GetMinPointRecords(pairs);
             RecordPoints(points, linesRecord.target);
             RecordPairs(pairs, linesRecord.target);
         }
@@ -66,18 +66,20 @@ namespace SpaceLine.Drawer
             return pairs;
         }
 
-        private List<PointRecord> GetAllPointRecords(List<RecordPair> pairs)
+        private List<PointRecord> GetMinPointRecords(List<RecordPair> pairs)
         {
             var list = new List<PointRecord>();
-            foreach (var item in pairs)
+            foreach (var pair in pairs)
             {
-                if (!list.Contains(item.a))
+                var temp = list.Find(x => Vector3.Distance(pair.a.transform.position, x.transform.position) < linesRecord.mergeDistence);
+                if (!temp)
                 {
-                    list.Add(item.a);
+                    list.Add(pair.a);
                 }
-                if (!list.Contains(item.b))
+                temp = list.Find(x => Vector3.Distance(pair.b.transform.position, x.transform.position) < linesRecord.mergeDistence);
+                if (!temp)
                 {
-                    list.Add(item.b);
+                    list.Add(pair.b);
                 }
             }
             return list;
