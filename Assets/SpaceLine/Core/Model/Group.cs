@@ -32,7 +32,7 @@ namespace SpaceLine {
             {
                 var newNode = points[i].Copy();
                 newData.points.Add(newNode);
-                idDic.Add(points[i].m_id, newNode.m_id);
+                idDic.Add(points[i].id, newNode.id);
             }
             for (int i = 0; i < lines.Count; i++)
             {
@@ -58,7 +58,7 @@ namespace SpaceLine {
                 var same = points.Find(x => Vector3.Distance(x.position, item.position) < 0.1f);
                 if (same != null)
                 {
-                    guidChanged.Add(item.m_id, same.m_id);
+                    guidChanged.Add(item.id, same.id);
                 }
                 else
                 {

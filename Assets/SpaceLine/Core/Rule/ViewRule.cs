@@ -17,7 +17,24 @@ namespace SpaceLine
     public class ViewRule
     {
         public List<MaterialPair> materials = new List<MaterialPair>();
-        public List<PrefabPair> prefabs = new List<PrefabPair>();
-        public List<LineInfoPair> lineinfos = new List<LineInfoPair>(); 
+        public List<LineInfoPair> lineinfos = new List<LineInfoPair>();
+
+        internal Material GetMaterial(string type)
+        {
+            var pair = materials.Find(x => x.type == type);
+            return pair.material;
+        }
+
+        internal float GetLineWidth(string type)
+        {
+            var pair = lineinfos.Find(x => x.type == type);
+            return pair.linewidth;
+        }
+        internal Color GetColor(string type)
+        {
+            var pair = lineinfos.Find(x => x.type == type);
+            return pair.linecolor;
+        }
+        
     }
 }

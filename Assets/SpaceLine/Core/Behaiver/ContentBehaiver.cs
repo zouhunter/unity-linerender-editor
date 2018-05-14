@@ -20,39 +20,15 @@ namespace SpaceLine
     public abstract class ContentBehaiver : MonoBehaviour
     {
         public GameObject Body { get { return gameObject; } }
-        protected GameObject instence;
         protected PointerEventData pointData;
         protected List<RaycastResult> rayCasts = new List<RaycastResult>();
         protected float timer;
 
-        public virtual void ShowModel(GameObject instence)
+        protected void CreateCollider()
         {
-            this.instence = instence;
-            instence.transform.rotation = Quaternion.identity;
-            instence.transform.position = Vector3.zero;
+            gameObject.AddComponent<BoxCollider>();
         }
-        protected void CreateCollider(PrimitiveType primitiveType = PrimitiveType.Cube)
-        {
-            switch (primitiveType)
-            {
-                case PrimitiveType.Sphere:
-                    break;
-                case PrimitiveType.Capsule:
-                    break;
-                case PrimitiveType.Cylinder:
-                    break;
-                case PrimitiveType.Cube:
-                    gameObject.AddComponent<BoxCollider>();
-                    break;
-                case PrimitiveType.Plane:
-                    break;
-                case PrimitiveType.Quad:
-                    break;
-                default:
-                    break;
-            }
 
-        }
         protected bool IsMousePointOnUI()
         {
             if (EventSystem.current != null)
@@ -74,6 +50,7 @@ namespace SpaceLine
 
             return false;
         }
+
         protected virtual bool HaveExecuteTwince(ref float timer, float time = 0.5f)
         {
             if (Time.time - timer < time)

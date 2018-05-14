@@ -10,12 +10,12 @@ using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
-namespace SpaceLine
+namespace SpaceLine.Common
 {
     /// <summary>
     /// 点
     /// <summary>
-    public class PointBehaiver : ContentBehaiver
+    public sealed class PointBehaiver : ContentBehaiver,IPointBehaiver
     {
         private float diameter = 1;
         public Point Info { get; private set; }
@@ -25,22 +25,11 @@ namespace SpaceLine
         private void Awake()
         {
             gameObject.layer = LayerMask.NameToLayer("SpaceLine_point");
-            if(gameObject.layer <= 0)
-            {
-                Debug.LogError("Layer SpaceLine_point not Exist!");
-            }
-        }
-        public void Hide()
-        {
-            if (instence != null)
-            {
-                instence.SetActive(false);
-            }
         }
         internal void OnInitialized(Point node)
         {
             this.Info = node;
-            transform.position = Info.position;
+            transform.localPosition = Info.position;
             CreateCollider();
         }
         private void OnMouseUp()
@@ -50,7 +39,8 @@ namespace SpaceLine
 
         private void OnMouseOver()
         {
-            if (onHover != null && !IsMousePointOnUI()) onHover.Invoke(this);
+            if (onHover != null && !IsMousePointOnUI())
+                onHover.Invoke(this);
         }
 
         public void SetSize(float r_node)

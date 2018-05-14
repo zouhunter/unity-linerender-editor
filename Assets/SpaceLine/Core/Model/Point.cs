@@ -16,7 +16,7 @@ namespace SpaceLine {
     /// <summary>
     [System.Serializable]
     public class Point {
-        public string m_id;
+        public string id;
         public string type;
         public Vector3 position;
         public Vector3 initposition { get; private set; }
@@ -24,7 +24,7 @@ namespace SpaceLine {
         {
             this.type = type;
             this.initposition = this.position = position;
-            m_id = System.Guid.NewGuid().ToString();
+            id = System.Guid.NewGuid().ToString();
         }
         internal Point Copy()
         {

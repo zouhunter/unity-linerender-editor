@@ -10,12 +10,12 @@ using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
-namespace SpaceLine
+namespace SpaceLine.Common
 {
     /// <summary>
     /// 点
     /// <summary>
-    public class LineBehaiver : ContentBehaiver
+    public class LineBehaiver : ContentBehaiver,ILineBehaiver
     {
         private float longness = 1;//长度加权
         private float diameter = 1;
@@ -31,37 +31,35 @@ namespace SpaceLine
         private void Awake()
         {
             gameObject.layer = LayerMask.NameToLayer("SpaceLine_line");
-            if (gameObject.layer <= 0)
-            {
-                Debug.LogError("layer not exist:" + "SpaceLine_line");
-            }
-        }
-        private void Start()
-        {
             if (lineRender == null)
                 InitLineRenderer();
         }
         private void Update()
         {
-            if (lineRender != null && Camera.main && lineRender.positionCount > 0)
+            if(lineRender != null)
             {
-                currentWidth = normalWidth * Vector3.Distance(transform.position, Camera.main.transform.position) / normalDistence;
-                if (Mathf.Abs(currentWidth - lineRender.widthStart) > 0.01f)
+                ShowLine();
+
+                if (Camera.main && lineRender.positionCount > 0)
                 {
-                    lineRender.SetWidth(currentWidth, currentWidth);
+                    currentWidth = normalWidth * Vector3.Distance(transform.position, Camera.main.transform.position) / normalDistence;
+                    if (Mathf.Abs(currentWidth - lineRender.widthStart) > 0.01f)
+                    {
+                        lineRender.SetWidth(currentWidth, currentWidth);
+                    }
                 }
             }
 
+        
         }
         private void InitLineRenderer()
         {
-            var holder = new GameObject("lineRenderer");
-            holder.AddComponent<MeshFilter>();
-            holder.AddComponent<MeshRenderer>();
+            var holder = new GameObject("lineRenderer",typeof(MeshFilter),typeof(MeshRenderer));
+            holder.transform.SetParent(transform);
+            Debug.Log(gameObject.transform);
             lineRender = holder.AddComponent<VRLineRenderer>();
             lineRender.SetVertexCount(0);
             lineRender.useWorldSpace = true;
-            lineRender.transform.SetParent(transform.parent);
         }
 
         public void OnInitialized(Line line)
@@ -69,12 +67,22 @@ namespace SpaceLine
             this.Info = line;
             CreateCollider();
         }
+        public void SetColor(Color color)
+        {
+            lineRender.GetComponent<Renderer>().material.color = color;
+        }
+        public void SetMaterial(Material mat)
+        {
+            lineRender.GetComponent<Renderer>().material = mat;
+        }
 
-        public void ShowLine(Material mat, float width)
+        public void SetLineWidth(float width)
         {
             normalWidth = width;
-            lineRender.GetComponent<Renderer>().material = mat;
+        }
 
+        public void ShowLine()
+        {
             var poss = new Vector3[2];
             poss[0] = transform.forward * longness * 0.5f + transform.position;
             poss[1] = -transform.forward * longness * 0.5f + transform.position;
@@ -82,25 +90,13 @@ namespace SpaceLine
             lineRender.SetVertexCount(2);
             lineRender.SetPositions(poss);
             lineRender.EditorCheckForUpdate();
-
-            if (instence != null)
-            {
-                instence.SetActive(false);
-            }
         }
-
-        public override void ShowModel(GameObject instence)
-        {
-            base.ShowModel(instence);
-            if (lineRender)
-                lineRender.SetVertexCount(0);
-        }
-
         internal void ReSetLength(float longness)
         {
             this.longness = longness;
             transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, longness);
         }
+
         private void OnMouseUp()
         {
             if (onClicked != null && !IsMousePointOnUI() && HaveExecuteTwince(ref timer)) onClicked.Invoke(this);
