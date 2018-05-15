@@ -13,9 +13,11 @@ namespace SpaceLine
     /// 材质信息
     /// <summary>
     [System.Serializable]
-    public struct MaterialPair
+    public struct RuleInfoPair
     {
         public string type;
         public Material material;
+        public float linewidth;
+        public Color linecolor;
     }
 }

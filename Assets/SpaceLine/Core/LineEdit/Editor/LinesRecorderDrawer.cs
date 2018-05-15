@@ -30,6 +30,7 @@ namespace SpaceLine.Drawer
                 RecordInfomations();
                 serializedObject.ApplyModifiedProperties();
             }
+           
         }
 
         private void RecordInfomations()

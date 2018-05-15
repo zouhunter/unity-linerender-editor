@@ -19,6 +19,7 @@ namespace SpaceLine
     {
         public float mergeDistence = 0.1f;
         public LinesObject target;
+
         public PairGroup[] pairGroups {
             get
             {

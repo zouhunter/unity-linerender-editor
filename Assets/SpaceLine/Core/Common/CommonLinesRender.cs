@@ -58,7 +58,7 @@ namespace SpaceLine.Common
                 var instence = new GameObject(line.id, typeof(LineBehaiver));
                 instence.transform.SetParent(lineParent);
                 behaiver = instence.GetComponent<LineBehaiver>();
-                behaiver.onClicked = (x) => { if (onClickLine != null) onClickLine(x.Info); Debug.Log("click:" + x); };
+                behaiver.onClicked = (x) => { if (onClickLine != null) onClickLine(x.Info); Debug.Log("click:" + x.Info.name); };
             }
             var startPoint = linesObject.points.Find(x => x.id == line.fromNodeId);
             var endPoint = linesObject.points.Find(x => x.id == line.toNodeId);

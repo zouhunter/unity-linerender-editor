@@ -16,25 +16,31 @@ namespace SpaceLine
     [System.Serializable]
     public class ViewRule
     {
-        public List<MaterialPair> materials = new List<MaterialPair>();
-        public List<LineInfoPair> lineinfos = new List<LineInfoPair>();
+        public RuleInfoPair defultRule;
+        public List<RuleInfoPair> rules = new List<RuleInfoPair>();
 
         internal Material GetMaterial(string type)
         {
-            var pair = materials.Find(x => x.type == type);
+            var pair = rules.Find(x => x.type == type);
+            if (pair.material == null)
+                return defultRule.material;
             return pair.material;
         }
 
         internal float GetLineWidth(string type)
         {
-            var pair = lineinfos.Find(x => x.type == type);
+            var pair = rules.Find(x => x.type == type);
+            if (pair.linewidth <= 0)
+                return defultRule.linewidth;
             return pair.linewidth;
         }
         internal Color GetColor(string type)
         {
-            var pair = lineinfos.Find(x => x.type == type);
+            var pair = rules.Find(x => x.type == type);
+            if (string.IsNullOrEmpty(pair.type))
+                return defultRule.linecolor;
             return pair.linecolor;
         }
-        
+
     }
 }
