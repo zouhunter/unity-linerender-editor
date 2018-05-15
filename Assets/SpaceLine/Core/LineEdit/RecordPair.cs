@@ -15,10 +15,22 @@ namespace SpaceLine
     /// <summary>
     /// 一对节点
     /// <summary>
-    [System.Serializable]
+    [Serializable]
     public class RecordPair
     {
         public string type;
+        [SerializeField]
+        private string _name;
+        public string name
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_name)){
+                    return a.name + ":" + b.name;
+                }
+                return name;
+            }
+        }
         public PointRecord a;
         public PointRecord b;
     }

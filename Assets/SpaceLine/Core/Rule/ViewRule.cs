@@ -17,30 +17,57 @@ namespace SpaceLine
     public class ViewRule
     {
         public RuleInfoPair defultRule;
-        public List<RuleInfoPair> rules = new List<RuleInfoPair>();
+        public List<RuleInfoGroup> rules = new List<RuleInfoGroup>();
+        private Dictionary<string, RuleInfoPair> _rulesDic;
+        public Dictionary<string, RuleInfoPair> RuleDic
+        {
+            get
+            {
+                if (_rulesDic == null)
+                {
+                    _rulesDic = new Dictionary<string, RuleInfoPair>();
+                    foreach (var item in rules)
+                    {
+                        if (!string.IsNullOrEmpty(item.type))
+                        {
+                            _rulesDic.Add(item.type, item.pair);
+                        }
+                    }
+                }
+                return _rulesDic;
+            }
+        }
 
         internal Material GetMaterial(string type)
         {
-            var pair = rules.Find(x => x.type == type);
-            if (pair.material == null)
-                return defultRule.material;
+            var pair = GetRuleFromType(type);
             return pair.material;
         }
 
         internal float GetLineWidth(string type)
         {
-            var pair = rules.Find(x => x.type == type);
-            if (pair.linewidth <= 0)
-                return defultRule.linewidth;
+            var pair = GetRuleFromType(type);
             return pair.linewidth;
         }
         internal Color GetColor(string type)
         {
-            var pair = rules.Find(x => x.type == type);
-            if (string.IsNullOrEmpty(pair.type))
-                return defultRule.linecolor;
+            var pair = GetRuleFromType(type);
             return pair.linecolor;
         }
 
+        internal float GetPointSize(string type)
+        {
+            var pair = GetRuleFromType( type);
+            return pair.pointSize;
+        }
+
+        public RuleInfoPair GetRuleFromType(string type)
+        {
+            if (RuleDic.ContainsKey(type))
+            {
+                return RuleDic[type];
+            }
+            return defultRule;
+        }
     }
 }

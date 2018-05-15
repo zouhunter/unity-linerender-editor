@@ -23,8 +23,11 @@ namespace SpaceLine.Common
         private Queue<LineBehaiver> linePool = new Queue<LineBehaiver>();
         private Transform pointParent;
         private Transform lineParent;
-        public UnityAction<Line> onClickLine { get; set; }
-        public UnityAction<Point> onClickPoint { get; set; }
+        public UnityAction<LineBehaiver> onClickLine { get; set; }
+        public UnityAction<PointBehaiver> onClickPoint { get; set; }
+
+        public UnityAction<LineBehaiver> onHoverLine { get; set; }
+        public UnityAction<PointBehaiver> onHoverPoint { get; set; }
 
         protected override void Awake()
         {
@@ -58,7 +61,8 @@ namespace SpaceLine.Common
                 var instence = new GameObject(line.id, typeof(LineBehaiver));
                 instence.transform.SetParent(lineParent);
                 behaiver = instence.GetComponent<LineBehaiver>();
-                behaiver.onClicked = (x) => { if (onClickLine != null) onClickLine(x.Info); Debug.Log("click:" + x.Info.name); };
+                behaiver.onClicked = (x) => { if (onClickLine != null) onClickLine(x); };
+                behaiver.onHover = (x) => { if (onHoverLine != null) onHoverLine(x); };
             }
             var startPoint = linesObject.points.Find(x => x.id == line.fromNodeId);
             var endPoint = linesObject.points.Find(x => x.id == line.toNodeId);
@@ -85,9 +89,11 @@ namespace SpaceLine.Common
                 var instence = new GameObject(point.id, typeof(PointBehaiver));
                 instence.transform.SetParent(pointParent);
                 behaiver = instence.GetComponent<PointBehaiver>();
-                behaiver.onClicked = (x) => { if (onClickPoint != null) onClickPoint(x.Info); Debug.Log("click:" + x); };
+                behaiver.onClicked = (x) => { if (onClickPoint != null) onClickPoint(x); };
+                behaiver.onHover = (x) => { if (onHoverPoint != null) onHoverPoint(x);};
             }
             behaiver.OnInitialized(point);
+            behaiver.SetSize(rule.GetPointSize(point.type));
             return behaiver;
 
         }

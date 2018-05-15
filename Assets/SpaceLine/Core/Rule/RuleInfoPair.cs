@@ -15,9 +15,17 @@ namespace SpaceLine
     [System.Serializable]
     public struct RuleInfoPair
     {
-        public string type;
+        
         public Material material;
         public float linewidth;
         public Color linecolor;
+        public float pointSize;
+    }
+
+    [System.Serializable]
+    public class RuleInfoGroup
+    {
+        public string type;
+        public RuleInfoPair pair;
     }
 }

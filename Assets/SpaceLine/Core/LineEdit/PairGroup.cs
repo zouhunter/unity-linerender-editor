@@ -44,8 +44,8 @@ namespace SpaceLine
                         Gizmos.matrix = Matrix4x4.identity;
 
                         Gizmos.color = Color.red;
-                        Gizmos.DrawSphere(posa, 1);
-                        Gizmos.DrawSphere(posb, 1);
+                        Gizmos.DrawSphere(posa, gizmosSize);
+                        Gizmos.DrawSphere(posb, gizmosSize);
                     }
                     else
                     {
