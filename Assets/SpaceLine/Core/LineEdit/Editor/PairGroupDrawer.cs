@@ -118,11 +118,11 @@ namespace SpaceLine
             nameProp.stringValue = EditorGUI.TextField(nameRect, nameProp.stringValue);
 
             var aPropRect = new Rect(rect.x + 150, rect.y, (rect.width - 150) * 0.5f, EditorGUIUtility.singleLineHeight);
-            aProp.objectReferenceValue = EditorGUI.ObjectField(aPropRect, aProp.objectReferenceValue, typeof(RecordPair), false);
+            aProp.objectReferenceValue = EditorGUI.ObjectField(aPropRect, aProp.objectReferenceValue, typeof(PointRecord), true);
 
             var bPropRect = aPropRect;
             bPropRect.x = aPropRect.x + (rect.width - 150) * 0.5f;
-            bProp.objectReferenceValue = EditorGUI.ObjectField(bPropRect, bProp.objectReferenceValue, typeof(RecordPair), false);
+            bProp.objectReferenceValue = EditorGUI.ObjectField(bPropRect, bProp.objectReferenceValue, typeof(PointRecord), true);
 
 
         }

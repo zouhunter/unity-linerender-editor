@@ -21,14 +21,14 @@ namespace SpaceLine
         public string type;
         [SerializeField]
         private string _name;
-        public string name
+        public string Name
         {
             get
             {
                 if (string.IsNullOrEmpty(_name)){
                     return a.name + ":" + b.name;
                 }
-                return name;
+                return _name;
             }
         }
         public PointRecord a;

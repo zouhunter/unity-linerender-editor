@@ -114,7 +114,7 @@ namespace SpaceLine.Drawer
                 if(pointa != null && pointb != null)
                 {
                     var line = new Line(pointa.id, pointb.id, pair.type);
-                    line.name = pair.name;
+                    line.name = pair.Name;
                     linesObj.lines.Add(line);
                 }
             }
