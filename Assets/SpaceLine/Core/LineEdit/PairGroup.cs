@@ -17,6 +17,7 @@ namespace SpaceLine
     /// <summary>
     public class PairGroup : UnityEngine.MonoBehaviour
     {
+        [HideInInspector]
         public List<RecordPair> pairs = new List<RecordPair>();
         private void OnDrawGizmos()
         {
