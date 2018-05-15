@@ -41,6 +41,7 @@ namespace SpaceLine.Drawer
             var points = GetMinPointRecords(pairs);
             RecordPoints(points, linesRecord.target);
             RecordPairs(pairs, linesRecord.target);
+            UnityEditor.EditorUtility.SetDirty(linesRecord.target);
         }
 
         private List<RecordPair> MergeGroups(PairGroup[] groups)
