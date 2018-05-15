@@ -54,9 +54,13 @@ namespace SpaceLine.Drawer
                     {
                         var func = new Predicate<RecordPair>(x =>
                         {
-                            return (x.a == pair.a && x.b == pair.b) ||
-                            (x.a == pair.b && x.b == pair.a);
+                            if (MergePoint(x.a.transform.position, pair.a.transform.position) && MergePoint(x.b.transform.position, pair.b.transform.position))
+                                return true;
+                            if (MergePoint(x.b.transform.position, pair.a.transform.position) && MergePoint(x.a.transform.position, pair.a.transform.position))
+                                return true;
+                            return false;
                         });
+
                         if (pairs.Find(func) == null)
                         {
                             pairs.Add(pair);
@@ -67,19 +71,22 @@ namespace SpaceLine.Drawer
             return pairs;
         }
 
+        private bool MergePoint(Vector3 pointa,Vector3 pointb)
+        {
+            return Vector3.Distance(pointa, pointb) <= linesRecord.mergeDistence;
+        }
+
         private List<PointRecord> GetMinPointRecords(List<RecordPair> pairs)
         {
             var list = new List<PointRecord>();
             foreach (var pair in pairs)
             {
                 var temp = list.Find(x => Vector3.Distance(pair.a.transform.position, x.transform.position) < linesRecord.mergeDistence);
-                if (!temp)
-                {
+                if (!temp){
                     list.Add(pair.a);
                 }
                 temp = list.Find(x => Vector3.Distance(pair.b.transform.position, x.transform.position) < linesRecord.mergeDistence);
-                if (!temp)
-                {
+                if (!temp){
                     list.Add(pair.b);
                 }
             }
@@ -102,12 +109,12 @@ namespace SpaceLine.Drawer
 
             foreach (var pair in pairs)
             {
-                var pointa = points.Find(x => Vector3.Distance(pair.a.transform.position, x.position) < linesRecord.mergeDistence);
-                var pointb = points.Find(x => Vector3.Distance(pair.b.transform.position, x.position) < linesRecord.mergeDistence);
+                var pointa = points.Find(x => MergePoint(pair.a.transform.position, x.position));
+                var pointb = points.Find(x => MergePoint(pair.b.transform.position, x.position));
                 if(pointa != null && pointb != null)
                 {
                     var line = new Line(pointa.id, pointb.id, pair.type);
-                    line.name = pair.a.name + ":" + pair.b.name;
+                    line.name = pair.name;
                     linesObj.lines.Add(line);
                 }
             }

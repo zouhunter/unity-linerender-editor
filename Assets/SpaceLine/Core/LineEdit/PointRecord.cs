@@ -17,6 +17,8 @@ namespace SpaceLine
     /// <summary>
     public class PointRecord : UnityEngine.MonoBehaviour
     {
+        [SerializeField]
+        private string _name;
         public string type;
     }
 }

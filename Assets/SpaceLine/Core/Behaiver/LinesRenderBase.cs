@@ -90,6 +90,8 @@ namespace SpaceLine
         /// </summary>
         protected void DrawLinesObject()
         {
+            ClearCreated();
+
             var rule = linesObject.rule;
             foreach (var item in linesObject.points)
             {
