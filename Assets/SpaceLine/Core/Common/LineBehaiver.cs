@@ -8,6 +8,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using System.Collections;
 using System.Collections.Generic;
 namespace SpaceLine.Common
@@ -27,7 +28,7 @@ namespace SpaceLine.Common
         private float normalWidth;
         private const float normalDistence = 10;
         private float currentWidth;
-
+        private RuleInfoPairs rule;
         private void Awake()
         {
             gameObject.layer = LayerMask.NameToLayer("SpaceLine_line");
@@ -61,11 +62,28 @@ namespace SpaceLine.Common
             lineRender.useWorldSpace = true;
         }
 
-        public void OnInitialized(Line line)
+        public void OnInitialized(Line line,RuleInfoPairs rule)
         {
             this.Info = line;
+            this.rule = rule;
+            SetDefultState();
             CreateCollider();
         }
+
+        private void SetDefultState()
+        {
+            SetMaterial(rule.normalPair.material);
+            SetLineWidth(rule.normalPair.linewidth);
+            SetColor(rule.normalPair.linecolor);
+        }
+
+        private void SetHoverState()
+        {
+            SetMaterial(rule.hoverPair.material);
+            SetLineWidth(rule.hoverPair.linewidth);
+            SetColor(rule.hoverPair.linecolor);
+        }
+
         public void SetColor(Color color)
         {
             lineRender.GetComponent<Renderer>().material.color = color;
@@ -107,6 +125,16 @@ namespace SpaceLine.Common
 
             }
         }
+
+        private void OnMouseEnter()
+        {
+            SetHoverState();
+        }
+        private void OnMouseExit()
+        {
+            SetDefultState();
+        }
+
         protected override void OnMouseOver()
         {
             base.OnMouseOver();

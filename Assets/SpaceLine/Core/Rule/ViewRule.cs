@@ -16,21 +16,21 @@ namespace SpaceLine
     [System.Serializable]
     public class ViewRule
     {
-        public RuleInfoPair defultRule;
-        public List<RuleInfoGroup> rules = new List<RuleInfoGroup>();
-        private Dictionary<string, RuleInfoPair> _rulesDic;
-        public Dictionary<string, RuleInfoPair> RuleDic
+        public RuleInfoPairs defultLineRule;
+        public List<RuleInfoGroup> lineRules = new List<RuleInfoGroup>();
+        private Dictionary<string, RuleInfoPairs> _rulesDic;
+        public Dictionary<string, RuleInfoPairs> RuleDic
         {
             get
             {
                 if (_rulesDic == null)
                 {
-                    _rulesDic = new Dictionary<string, RuleInfoPair>();
-                    foreach (var item in rules)
+                    _rulesDic = new Dictionary<string, RuleInfoPairs>();
+                    foreach (var item in lineRules)
                     {
                         if (!string.IsNullOrEmpty(item.type))
                         {
-                            _rulesDic.Add(item.type, item.pair);
+                            _rulesDic.Add(item.type, item.pairs);
                         }
                     }
                 }
@@ -38,36 +38,12 @@ namespace SpaceLine
             }
         }
 
-        internal Material GetMaterial(string type)
+        public RuleInfoPairs GetRulePairsFromType(string type)
         {
-            var pair = GetRuleFromType(type);
-            return pair.material;
-        }
-
-        internal float GetLineWidth(string type)
-        {
-            var pair = GetRuleFromType(type);
-            return pair.linewidth;
-        }
-        internal Color GetColor(string type)
-        {
-            var pair = GetRuleFromType(type);
-            return pair.linecolor;
-        }
-
-        internal float GetPointSize(string type)
-        {
-            var pair = GetRuleFromType( type);
-            return pair.pointSize;
-        }
-
-        public RuleInfoPair GetRuleFromType(string type)
-        {
-            if (RuleDic.ContainsKey(type))
-            {
+            if (RuleDic.ContainsKey(type)){
                 return RuleDic[type];
             }
-            return defultRule;
+            return defultLineRule;
         }
     }
 }

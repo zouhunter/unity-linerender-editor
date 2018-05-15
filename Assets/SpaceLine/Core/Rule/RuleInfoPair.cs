@@ -13,19 +13,24 @@ namespace SpaceLine
     /// 材质信息
     /// <summary>
     [System.Serializable]
-    public struct RuleInfoPair
+    public class RuleInfoPair
     {
-        
         public Material material;
-        public float linewidth;
-        public Color linecolor;
-        public float pointSize;
+        public float linewidth = 1;
+        public Color linecolor = Color.white;
     }
 
     [System.Serializable]
     public class RuleInfoGroup
     {
         public string type;
-        public RuleInfoPair pair;
+        public RuleInfoPairs pairs;
+    }
+
+    [System.Serializable]
+    public class RuleInfoPairs
+    {
+        public RuleInfoPair normalPair;
+        public RuleInfoPair hoverPair;
     }
 }

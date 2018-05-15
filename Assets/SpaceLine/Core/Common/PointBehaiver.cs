@@ -25,6 +25,7 @@ namespace SpaceLine.Common
         private void Awake()
         {
             gameObject.layer = LayerMask.NameToLayer("SpaceLine_point");
+            SetSize(2);
         }
         internal void OnInitialized(Point node)
         {
@@ -48,7 +49,7 @@ namespace SpaceLine.Common
                 onHover.Invoke(this);
         }
 
-        public void SetSize(float r_node)
+        private void SetSize(float r_node)
         {
             diameter = 2 * r_node;
             transform.localScale = Vector3.one * diameter;

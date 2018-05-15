@@ -69,10 +69,8 @@ namespace SpaceLine.Common
             behaiver.Body.transform.localPosition = (startPoint.position + endPoint.position) * 0.5f;
             behaiver.Body.transform.forward = (endPoint.position - startPoint.position).normalized;
             behaiver.ReSetLength(Vector3.Distance(endPoint.position, startPoint.position));
-            behaiver.OnInitialized(line);
-            behaiver.SetMaterial(rule.GetMaterial(line.type));
-            behaiver.SetLineWidth(rule.GetLineWidth(line.type));
-            behaiver.SetColor(rule.GetColor(line.type));
+            behaiver.OnInitialized(line, rule.GetRulePairsFromType(line.type));
+           
             return behaiver;
         }
 
@@ -93,7 +91,6 @@ namespace SpaceLine.Common
                 behaiver.onHover = (x) => { if (onHoverPoint != null) onHoverPoint(x);};
             }
             behaiver.OnInitialized(point);
-            behaiver.SetSize(rule.GetPointSize(point.type));
             return behaiver;
 
         }
